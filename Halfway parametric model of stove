@@ -2,6 +2,7 @@
 
 //input parameters
 
+detail=3;
 skuffhoyde=125;
 skuffbredde=400;
 skuffdybde=400;
@@ -34,7 +35,7 @@ roundoven=25;
 roundstand=20;
 roundfeet=8;
 
-$fn=7;
+$fn=detail;
 
 
 difference(){
@@ -50,16 +51,70 @@ drawerlid();
 ovendoor();
 handles();
 gague();
+lenco();
+lencobox();
+//lencoskuff();
+
+module lencoskuff(){
+    difference(){
+    translate([-700, 0,-160])
+    for (i=[-1:2:1]){
+        for (j=[-1:2:1]){
+            
+            color("yellow")difference(){
+            translate([i*(200-15), 0,0])
+        cube([30,400,100],center = true);
+                for (k=[-50:20:50]){
+              translate([0,(200-15),k-5])cube([500,31,11],center = true);  
+                    translate([0,-(200-15),k-5])cube([500,31,11],center = true); 
+           }}
+            color("black")difference(){
+         translate([0, j*(200-15),0])
+        cube([400,30,100],center = true);
+            for (l=[-50:20:50]){
+              translate([(200-15),0,l+5])cube([31,500,11],center = true);  
+                    translate([-(200-15),0,l+5])cube([31,500,11],center = true); 
+    }}}
+}
+translate([-700, 0,-130])cube([lencobredde+50, lencodybde+10, 50],center=true);
+}}
+
+module lencobox(){
+    difference(){
+    union(){
+    translate([-700, 0,-220])
+    color("black")cube([lencobredde-7, lencodybde-7, 20],center=true);
+    translate([-700, 0,-180])
+    color("chocolate")cube([lencobredde+5, lencodybde+5, 60],center=true);
+}
+translate([-700, 0,-180])
+    color("chocolate")cube([lencobredde-10, lencodybde-10, 70],center=true);
+}
+}
+module lenco () {
+    translate([-700, 0,-150])
+    union(){
+        color("gray")cube([lencobredde, lencodybde, 10],center=true);
+    translate([40,0,10])color("silver")cylinder(20, 150,150, center=true); 
+     translate([-110,-80,20])color("black")cylinder(40, 7,7, center=true); 
+        translate([-110,80,20])color("black")cylinder(40, 7,7, center=true); 
+      translate([-110,00,40])color("silver")rotate([0,90,90])cylinder(240, 7,7, center=true);  
+         translate([-110,120,40])color("black")cube([20, 30,10], center=true);
+        translate([-120,120,40])color("black")cube([40, 4,4], center=true);
+        translate([-110,-120,40])color("black")cube([30, 30,30], center=true); 
+        translate([30,-30,-30])rotate([0,0,-20])color("grey")cube([90, 80,50], center=true);
+    }
+}
 
 module gague(){
-    color("grey")difference(){
+    color("silver")difference(){
     translate([-depth/2-25 ,0,-450])rotate([0,96,0])cylinder(5,33,35,center=true);
      translate([-depth/2-27 ,0,-450])rotate([0,96,0])cylinder(4,28,30,center=true);   
     }
 }
 
 module handles(){
-    color("grey")for (i=[-1:2:1]){
+    color("silver")for (i=[-1:2:1]){
      for (j=[skuffhoyde/2+topdistance:openingsdistance+dorhoyde/2:500]){
       translate([-depth/2-20 ,i*75/2,-j])rotate([0,90,0])cylinder(5,7.5,7.5,center=true);
          translate([-depth/2-25 ,i*75/2,-j])rotate([0,90,0])cylinder(5,6.5,6.5,center=true);
@@ -78,7 +133,7 @@ module ovendoor(){
 }
 sphere(7);
 }  
-color("gray")for (i=[-1:2:1]){
+color("silver")for (i=[-1:2:1]){
     translate([-depth/2-22,i*185,-skuffhoyde-topdistance-openingsdistance-dorhoyde/2+50-165])rotate([90,0,0])cylinder(20,20,20,center=true);
 }
 difference(){
@@ -100,7 +155,7 @@ sphere(3);
 
  translate([-depth/2-0,0,-skuffhoyde-topdistance-openingsdistance-dorhoyde/2-165])cube([500,400,100],center=true);
 }
-color("black")difference(){
+color("silver")difference(){
 minkowski(){
  difference(){
   translate([-depth/2-0,0,-skuffhoyde-topdistance-openingsdistance-dorhoyde/2-4])
@@ -228,3 +283,4 @@ module tomrom(){
         cube([width-2*roundstand-4,depth-2*roundstand-4,(hoydestand-legs-10)*0.21],center=true);
         cylinder(10,roundstand, roundstand,center=true);
 }}
+
